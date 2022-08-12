@@ -29,12 +29,10 @@ export const login = async( userid, passwd ) => {
 	});
 };
 
-export const loginCheck = async ( NextRequest ) => {
+export const loginCheck = async ( cookies ) => {
 	console.log('auth');
 	const cryptr = new Cryptr('123456');
-	const cookies = NextRequest;
-	
-	let loginCookie = "";
+	let loginCookie = cookies['madahm_test'] != null ? cookies['madahm_test'] : '' ;
 
 	/*
 	let redis = new Redis({
@@ -44,19 +42,11 @@ export const loginCheck = async ( NextRequest ) => {
     });
 	*/
 
-    if (cookies != null) {
-		const cookieList = cookies.split("; ");
-		for ( var i = 0; i < cookieList.length; i++) {
-			if(cookieList[i].includes('madahm_test=')) {
-				loginCookie = cookieList[i].split('madahm_test=')[1];
-				const decryptedString = cryptr.decrypt(loginCookie);
-			}
-		}
-    }
 	console.log("loginCookie");
-	console.log(loginCookie != '' ? 1 : 0);
-	
-	Router.push("/");
+	console.log(loginCookie != '' ? true : false);
+	let asd = loginCookie != '' ? true : false;
+	return asd;
+	//Router.push("/");
 };
 
 

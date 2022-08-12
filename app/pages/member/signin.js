@@ -57,8 +57,3 @@ export default function Signin() {
 		</>
     );
 }
-export const getServerSideProps = requireAuthentication( async context => {
-    return {
-        props: {}
-    }
-});
