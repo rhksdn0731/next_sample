@@ -3,7 +3,6 @@ import Cryptr from 'cryptr';
 
 const cookieOptions = {
     httpOnly: true,
-	domain: '.goorm.io',
     maxAge: 2592000,
     path: "/",
     sameSite: "Lax",

@@ -44,8 +44,7 @@ export const loginCheck = async ( cookies ) => {
 
 	console.log("loginCookie");
 	console.log(loginCookie != '' ? true : false);
-	let asd = loginCookie != '' ? true : false;
-	return asd;
+	return loginCookie != '' ? true : false;
 	//Router.push("/");
 };
 
