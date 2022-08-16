@@ -3,7 +3,7 @@ import NavBar from '/components/NavBar';
 import Layout from '/components/Layout/Layout';
 import Router from 'next/router'
 
-import { login } from '/lib/auth';
+import { login, loginCheck } from '/lib/auth';
 import { requireAuthentication } from '/pages/api/auth/requireAuthentication';
 
 export default function Signin() {
@@ -56,4 +56,22 @@ export default function Signin() {
 			</Layout>
 		</>
     );
+}
+
+export async function getServerSideProps(context) {
+
+	console.log("====loginCheck start");
+	let login = await loginCheck(context.req.cookies);
+	if (login) {
+		return {
+			redirect: {
+				permanent: false,
+				destination: "/"
+			}
+		}
+	}
+	
+	return {
+		props: {}
+	}
 }

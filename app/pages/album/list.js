@@ -12,57 +12,52 @@ import { loginCheck } from '/lib/auth';
 import Router from 'next/router'
 
 // item will be populated at build time by getStaticProps()
-function albumList ({ login, albumlist }) {
+function albumList ({ albumlist }) {
 	console.log("===login====");
-	if (!login) {
-		Router.replace('/member/signin');
-		return (
-			<></>
-		)
-	} else {
-		console.log("====albumlist start");
-		return (
-			<>
-				<Head>
-					<title>musik - albumList</title>
-					<meta property="og:title" content="database" key="title" />
-				</Head>
-				<NavBar></NavBar>
-				<Layout>
-					<div>
-						<Link href="/album/create">
-							<a className="border rounded border-zinc-700 text-zinc-700 text-sm px-2 py-1">
-								추가하기
-							</a>
-						</Link>
-					</div>
-					<p>tes11t : { albumlist.results.length > 0 ? albumlist.results.length : '' }</p>
-					<ul>
-						{
-							albumlist.results.length > 0 
-							? albumlist.results.map((albumData,idx) => (
-								<Album key={idx} data={albumData}/>
-							))
-							: <li>empty</li>
-						}
-					</ul>
-				</Layout>
-			</>
-		)
-	}
+	return (
+		<>
+			<Head>
+				<title>musik - albumList</title>
+				<meta property="og:title" content="database" key="title" />
+			</Head>
+			<NavBar></NavBar>
+			<Layout>
+				<div>
+					<Link href="/album/create">
+						<a className="border rounded border-zinc-700 text-zinc-700 text-sm px-2 py-1">
+							추가하기
+						</a>
+					</Link>
+				</div>
+				<p>tes11t : { albumlist.results.length > 0 ? albumlist.results.length : '' }</p>
+				<ul>
+					{
+						albumlist.results.length > 0 
+						? albumlist.results.map((albumData,idx) => (
+							<Album key={idx} data={albumData}/>
+						))
+						: <li>empty</li>
+					}
+				</ul>
+			</Layout>
+		</>
+	)
 }
 
 export async function getServerSideProps(context) {
-  console.log("====run albumlist getServerSideProps start");
-	//console.log(`${TOKEN}`);
+	console.log("====run albumlist getServerSideProps start");
 	
-	let login = false;
-	let albumlist2 = loginCheck(context.req.cookies);
-	albumlist2.then(value => {
-		login = value;
-	}).catch(err => {
-		//console.log(err);
-	});
+	console.log("====loginCheck start");
+	let login = await loginCheck(context.req.cookies);
+	if (!login) {
+		return {
+			redirect: {
+				permanent: false,
+				destination: "/member/signin"
+			}
+		}
+	}
+	console.log("====loginCheck end");
 	
 	let albumlist = null;
 	try {
@@ -84,7 +79,6 @@ export async function getServerSideProps(context) {
 	//console.log(albumlist);
     return {
         props: {
-			login: login,
 			albumlist
 		}
     }
