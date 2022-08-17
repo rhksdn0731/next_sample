@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import '../styles/globals.scss'
+import { SWRConfig } from 'swr'
 
 function MyApp({ Component, pageProps }) {
 	console.log("====app");
@@ -11,7 +12,9 @@ function MyApp({ Component, pageProps }) {
 				<meta property="og:title" content="nextjs test" key="title" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<Component {...pageProps} />
+			<SWRConfig value={{fetcher: (url) => fetch(url).then((response) => response.json())}}>
+				<Component {...pageProps} />
+			</SWRConfig>
 		</>
 	)
 }
