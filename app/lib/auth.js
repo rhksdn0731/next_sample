@@ -24,7 +24,7 @@ export const login = async( userid, passwd ) => {
 
 	})
 	.catch(function (error) {
-		Router.push('/');
+		Router.push('/member/login');
 		//console.log(error.data);
 	});
 };

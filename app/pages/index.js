@@ -2,6 +2,8 @@ import Head from "next/head";
 import NavBar from '/components/NavBar';
 import Layout from '/components/Layout/Layout';
 import axios from "axios";
+import useSWR from 'swr';
+
 // item will be populated at build time by getStaticProps()
 function Home() {
 	return (
