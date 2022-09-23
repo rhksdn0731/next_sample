@@ -1,5 +1,5 @@
 import axios from "axios";
-import { TOKEN, DATABASE_ID } from '/config';
+import { TOKEN, ALUBUMLIST_ID } from '/config';
 
 export default function handler(req, res) {
 	const title = req.body.title;
@@ -10,7 +10,7 @@ export default function handler(req, res) {
 	
 	const data = {
 		parent: {
-			database_id: DATABASE_ID
+			database_id: ALUBUMLIST_ID
 		},
 		properties: {
 			title: {

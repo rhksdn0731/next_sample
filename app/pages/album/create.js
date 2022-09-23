@@ -2,7 +2,7 @@ import Head from "next/head";
 import NavBar from '/components/NavBar';
 import Layout from '/components/Layout/Layout';
 import CreateForm from '/components/MusikList/CreateForm';
-import { TOKEN, DATABASE_ID } from '/config';
+import { TOKEN, ALUBUMLIST_ID } from '/config';
 import axios from "axios";
 
 // item will be populated at build time by getStaticProps()

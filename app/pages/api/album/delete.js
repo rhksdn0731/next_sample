@@ -1,5 +1,5 @@
 import axios from "axios";
-import { TOKEN, DATABASE_ID } from '/config';
+import { TOKEN, ALUBUMLIST_ID } from '/config';
 
 export default function handler(req, res) {
     const idx = req.body.idx;
