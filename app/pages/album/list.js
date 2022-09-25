@@ -7,7 +7,7 @@ import { NextRequest } from 'next/server';
 import axios from "axios";
 import Link from 'next/link'
 
-import { TOKEN, DATABASE_ID } from '/config';
+import { TOKEN, ALUBUMLIST_ID } from '/config';
 import { loginCheck } from '/lib/auth';
 import Router from 'next/router'
 
@@ -61,7 +61,7 @@ export async function getServerSideProps(context) {
 	
 	let albumlist = null;
 	try {
-		const res = await axios.post(`https://api.notion.com/v1/databases/${DATABASE_ID}/query`, JSON.stringify({page_size: 100}), {
+		const res = await axios.post(`https://api.notion.com/v1/databases/${ALUBUMLIST_ID}/query`, JSON.stringify({page_size: 100}), {
 			headers: {
 				'Accept': 'application/json',
 				'Notion-Version': '2022-02-22',
