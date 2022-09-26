@@ -10,13 +10,13 @@ export default function authTest() {
 	console.log(!data);
 	console.log("====!data end");
 	
-	useEffect(() => {
-		if(!data) {
-			return router.replace("/member/signin");
-		} else {
-			return router.replace("/");
-		}
-	}, [data, router]) //data와 router가 바뀔 때 마다 계속 실행
+	// useEffect(() => {
+	// 	if(!data) {
+	// 		return router.replace("/member/signin");
+	// 	} else {
+	// 		return router.replace("/");
+	// 	}
+	// }, [data, router]) //data와 router가 바뀔 때 마다 계속 실행
 	
-	return data;
+	// return data;
 }
