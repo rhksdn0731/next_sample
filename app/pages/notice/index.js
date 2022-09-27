@@ -1,62 +1,66 @@
 import Head from "next/head";
 import NavBar from '/components/NavBar';
 import Layout from '/components/Layout/Layout';
-import List from "/components/notice/List";
-import { useEffect, useState } from "react";
+import Detail from "/components/Notice/Detail";
+import { NextRequest } from 'next/server';
 
 import axios from "axios";
 import Link from 'next/link'
 
-import useSWR from 'swr'
+import { TOKEN, NOTICELIST_ID } from '/config';
 
 // item will be populated at build time by getStaticProps()
-function noticeList ({ noticeList }) {
-	
-	const [pageIndex, setPageIndex] = useState(0);
-
-	// React state인 페이지 인덱스를 포함하는 API URL
-	const { data } = useSWR(`/api/notice/list?page=${pageIndex}`);
-
+function noticelist ({ noticelist }) {
+	console.log("===login====");
 	return (
 		<>
 			<Head>
-				<title>musik - noticeList</title>
+				<title>musik - Notice List</title>
 				<meta property="og:title" content="database" key="title" />
 			</Head>
 			<NavBar></NavBar>
 			<Layout>
-				
+				<p>Notice count : { noticelist.results.length > 0 ? noticelist.results.length : '' }</p>
+				<ul>
+					{
+						noticelist.results.length > 0 
+						? noticelist.results.map((albumData,idx) => (
+							<Detail key={idx} data={albumData}/>
+						))
+						: <li>empty</li>
+					}
+				</ul>
 			</Layout>
 		</>
 	)
 }
 
-// export async function getServerSideProps(context) {
-// 	console.log("====run noticeList getServerSideProps start");
+export async function getServerSideProps(context) {
+	console.log("====run noticelist getServerSideProps start");
 	
-// 	let noticeList = null;
-// 	try {
-// 		const res = await axios.post(`https://api.notion.com/v1/databases/${ALUBUMLIST_ID}/query`, JSON.stringify({page_size: 100}), {
-// 			headers: {
-// 				'Accept': 'application/json',
-// 				'Notion-Version': '2022-02-22',
-// 				'Content-Type': 'application/json',
-// 				'Authorization': `Bearer ${TOKEN}`
-// 			}
-// 		});
-// 		console.log("====res.data");
-// 		noticeList = res.data;
-// 	}
-// 	catch(error) {
-// 		console.log('null');
-// 	}
-// 	console.log("====run noticeList getServerSideProps end");
-// 	//console.log(noticeList);
-//     return {
-//         props: {
-// 			noticeList
-// 		}
-//     }
-// }
+	let noticelist = null;
+	try {
+		const res = await axios.post(`https://api.notion.com/v1/databases/${NOTICELIST_ID}/query`, JSON.stringify({page_size: 100}), {
+			headers: {
+				'Accept': 'application/json',
+				'Notion-Version': '2022-02-22',
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${TOKEN}`
+			}
+		});
+		console.log("====res.data");
+		noticelist = res.data;
+	}
+	catch(error) {
+		console.log('null');
+	}
+	console.log("====run noticelist getServerSideProps end");
+	//console.log(noticelist);
+    return {
+        props: {
+			noticelist
+		}
+    }
+}
 
-export default noticeList
+export default noticelist
